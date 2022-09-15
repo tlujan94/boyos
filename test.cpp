@@ -21,7 +21,7 @@ namespace Utilities {
 namespace Unit {
     void _missing_operand() {
         missing_operand ex;
-        assert(Utilities::equals(ex.what(), "missing operand: x"));
+        assert(Utilities::equals(ex.what(), "missing operand"));
     }
 
     void test() {
