@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 #include "src/errors/missing_operand.h"
+#include "src/errors/missing_operator.h"
 
 using namespace std;
 
@@ -24,8 +25,14 @@ namespace Unit {
         assert(Utilities::equals(ex.what(), "missing operand"));
     }
 
+    void _missing_operator() {
+        missing_operator ex;
+        assert(Utilities::equals(ex.what(), "missing operator"));
+    }
+
     void test() {
         _missing_operand();
+        _missing_operator();
     }
 }
 
