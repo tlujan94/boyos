@@ -14,4 +14,3 @@ Run the following command after building:
 
 ## To-Do ##
  - remove `<exception>` implementations
- - remove `<string.h>` implementations
