@@ -11,3 +11,7 @@ Run the following command:
 ## Running:
 Run the following command after building:
 ```./boyos```
+
+## To-Do ##
+ - remove `<exception>` implementations
+ - remove `<string.h>` implementations

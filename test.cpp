@@ -1,6 +1,8 @@
 #include <iostream>
 #include <stdio.h>
 
+#include "src/errors/missing_operand.h"
+
 using namespace std;
 
 namespace Utilities {
@@ -15,6 +17,17 @@ namespace Utilities {
         return true;
     }
 };
+
+namespace Unit {
+    void _missing_operand() {
+        missing_operand ex;
+        assert(Utilities::equals(ex.what(), "missing operand"));
+    }
+
+    void test() {
+        _missing_operand();
+    }
+}
 
 namespace Integration {
     void test() {
@@ -31,6 +44,9 @@ namespace Integration {
 };
 
 int main() {
+    Unit::test();
+    cout << "passed all unit tests" << endl;
+
     Integration::test();
-    cout << "passed all tests" << endl;
+    cout << "passed all integration tests" << endl;
 }
