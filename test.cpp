@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 #include "src/engine.h"
+#include "src/errors/divide_by_zero.h"
 #include "src/errors/invalid_operand.h"
 #include "src/errors/invalid_operator.h"
 #include "src/errors/missing_operand.h"
@@ -23,6 +24,11 @@ namespace Utilities {
 };
 
 namespace Unit {
+    void _divide_by_zero() {
+        divide_by_zero ex;
+        assert(Utilities::equals(ex.what(), "cannot divide by zero"));
+    }
+
     void _invalid_operand() {
         invalid_operand ex;
         assert(Utilities::equals(ex.what(), "invalid operand"));
@@ -113,6 +119,7 @@ namespace Unit {
     };
 
     void test() {
+        _divide_by_zero();
         _invalid_operand();
         _invalid_operator();
         _missing_operand();
