@@ -116,6 +116,131 @@ namespace Unit {
                 }
                 
             }
+
+            static void execute() {
+                engine engine;
+
+                // validate
+                int result = 0;
+                int argc = 1;
+                const char* argv[4];
+                argv[0] = "test";
+                argv[1] = "z";
+                argv[2] = "*";
+                argv[3] = "2";
+                try {
+                    result = engine.execute(argc, argv);
+                    assert(false);
+                } catch (missing_operand& ex) {
+                    assert(Utilities::equals(ex.what(), "missing operand"));
+                }
+
+                argc = 2;
+                try {
+                    result = engine.execute(argc, argv);
+                    assert(false);
+                } catch (missing_operator& ex) {
+                    assert(Utilities::equals(ex.what(), "missing operator"));
+                }
+
+                argc = 3;
+                try {
+                    result = engine.execute(argc, argv);
+                    assert(false);
+                } catch (missing_operand& ex) {
+                    assert(Utilities::equals(ex.what(), "missing operand"));
+                }
+
+                // _parse(lhs)
+                argc = 4;
+                try {
+                    result = engine.execute(argc, argv);
+                    assert(false);
+                } catch (invalid_operand& ex) {
+                    assert(Utilities::equals(ex.what(), "invalid operand"));
+                }
+
+                argv[1] = "+2147483648";
+                try {
+                    result = engine.execute(argc, argv);
+                    assert(false);
+                } catch (invalid_operand& ex) {
+                    assert(Utilities::equals(ex.what(), "invalid operand"));
+                }
+
+                // _parse(rhs)
+                argv[1] = "1";
+                argv[3] = "z";
+                try {
+                    result = engine.execute(argc, argv);
+                    assert(false);
+                } catch (invalid_operand& ex) {
+                    assert(Utilities::equals(ex.what(), "invalid operand"));
+                }
+
+                argv[3] = "+2147483648";
+                try {
+                    result = engine.execute(argc, argv);
+                    assert(false);
+                } catch (invalid_operand& ex) {
+                    assert(Utilities::equals(ex.what(), "invalid operand"));
+                }
+
+                // operator: invalid
+                argv[1] = "1";
+                argv[2] = "z";
+                argv[3] = "2";
+
+                try {
+                    result = engine.execute(argc, argv);
+                    assert(false);
+                } catch (invalid_operator& ex) {
+                    assert(Utilities::equals(ex.what(), "invalid operator"));
+                }
+
+                // operator: *
+                argv[2] = "*";
+                result = engine.execute(argc, argv);
+                assert(result == 2);
+
+                // operator /
+                argv[2] = "/";
+                argv[3] = "0";
+                try {
+                    result = engine.execute(argc, argv);
+                    assert(false);
+                } catch (divide_by_zero& ex) {
+                    assert(Utilities::equals(ex.what(), "cannot divide by zero"));
+                }
+
+                argv[3] = "2";
+                result = engine.execute(argc, argv);
+                assert(result == 0);
+
+                // operator %
+                argv[2] = "%";
+                argv[3] = "0";
+                try {
+                    result = engine.execute(argc, argv);
+                    assert(false);
+                } catch (divide_by_zero& ex) {
+                    assert(Utilities::equals(ex.what(), "cannot divide by zero"));
+                }
+
+                argv[3] = "2";
+                result = engine.execute(argc, argv);
+                assert(result == 1);
+
+                // operator +
+                argv[2] = "+";
+                result = engine.execute(argc, argv);
+                assert(result == 3);
+
+                // operator -
+                argv[2] = "-";
+                result = engine.execute(argc, argv);
+                assert(result == -1);
+            }
     };
 
     void test() {
@@ -125,9 +250,10 @@ namespace Unit {
         _missing_operand();
         _missing_operator();
 
-        _engine e;
-        e._parse();
-        e._validate();
+        _engine engine;
+        engine._parse();
+        engine._validate();
+        engine.execute();
     }
 }
 

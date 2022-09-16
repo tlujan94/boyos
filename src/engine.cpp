@@ -40,3 +40,30 @@ void engine::_validate(int argc) {
         throw missing_operand();
     }
 }
+
+int engine::execute(int argc, const char** argv) {
+    _validate(argc);
+    int x = _parse(argv[1]);
+    int y = _parse(argv[3]);
+    switch (argv[2][0]) {
+        case '*':
+            return x * y; 
+        case '/':
+            if (y == 0) {
+                throw divide_by_zero();
+            }
+            return x / y;
+        case '%':
+            if (y == 0) {
+                throw divide_by_zero();
+            }
+            return x % y;
+        case '+':
+            return x + y;
+        case '-':
+            return x - y;
+        default:
+            throw invalid_operator();
+    }
+    return 1;
+}
