@@ -280,7 +280,7 @@ namespace Integration {
     void _invalid_operand() {
         char buffer[128];
     
-        FILE* pipe = popen("./boyos z * 0", "r");
+        FILE* pipe = popen("./boyos z \\* 0", "r");
         if (!pipe) {
             cout << "popen failed" << endl;
         } else {
@@ -328,7 +328,7 @@ namespace Integration {
     void _arithmetic() {
         char buffer[128];
     
-        FILE* pipe = popen("./boyos 1 * 2", "r");
+        FILE* pipe = popen("./boyos 1 \\* 2", "r");
         if (!pipe) {
             cout << "popen failed" << endl;
         } else {
