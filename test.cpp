@@ -38,18 +38,21 @@ namespace Unit {
 
                 try {
                     engine._validate(1);
+                    assert(false);
                 } catch (missing_operand& e) {
                     assert(Utilities::equals(e.what(), "missing operand"));
                 }
 
                 try {
                     engine._validate(2);
+                    assert(false);
                 } catch (missing_operator& e) {
                     assert(Utilities::equals(e.what(), "missing operator"));
                 }
 
                 try {
                     engine._validate(3);
+                    assert(false);
                 } catch (missing_operand& e) {
                     assert(Utilities::equals(e.what(), "missing operand"));
                 }
