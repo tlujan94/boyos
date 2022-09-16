@@ -265,7 +265,43 @@ namespace Unit {
 }
 
 namespace Integration {
-    void test() {
+    void _divide_by_zero() {
+        char buffer[128];
+    
+        FILE* pipe = popen("./boyos 1 / 0", "r");
+        if (!pipe) {
+            cout << "popen failed" << endl;
+        } else {
+            fgets(buffer, 128, pipe);
+            assert(Utilities::equals("error: cannot divide by zero\n", buffer));
+        }
+    }
+
+    void _invalid_operand() {
+        char buffer[128];
+    
+        FILE* pipe = popen("./boyos z * 0", "r");
+        if (!pipe) {
+            cout << "popen failed" << endl;
+        } else {
+            fgets(buffer, 128, pipe);
+            assert(Utilities::equals("error: invalid operand\n", buffer));
+        }
+    }
+
+    void _invalid_operator() {
+        char buffer[128];
+    
+        FILE* pipe = popen("./boyos 1 z 0", "r");
+        if (!pipe) {
+            cout << "popen failed" << endl;
+        } else {
+            fgets(buffer, 128, pipe);
+            assert(Utilities::equals("error: invalid operator\n", buffer));
+        }
+    }
+
+    void _missing_operand() {
         char buffer[128];
     
         FILE* pipe = popen("./boyos", "r");
@@ -273,8 +309,73 @@ namespace Integration {
             cout << "popen failed" << endl;
         } else {
             fgets(buffer, 128, pipe);
-            assert(Utilities::equals("Hello, world!\n", buffer));
+            assert(Utilities::equals("error: missing operand\n", buffer));
         }
+    }
+
+    void _missing_operator() {
+        char buffer[128];
+    
+        FILE* pipe = popen("./boyos 0", "r");
+        if (!pipe) {
+            cout << "popen failed" << endl;
+        } else {
+            fgets(buffer, 128, pipe);
+            assert(Utilities::equals("error: missing operator\n", buffer));
+        }
+    }
+
+    void _arithmetic() {
+        char buffer[128];
+    
+        FILE* pipe = popen("./boyos 1 * 2", "r");
+        if (!pipe) {
+            cout << "popen failed" << endl;
+        } else {
+            fgets(buffer, 128, pipe);
+            assert(Utilities::equals("2\n", buffer));
+        }
+
+        pipe = popen("./boyos 1 / 2", "r");
+        if (!pipe) {
+            cout << "popen failed" << endl;
+        } else {
+            fgets(buffer, 128, pipe);
+            assert(Utilities::equals("0\n", buffer));
+        }
+
+        pipe = popen("./boyos 1 % 2", "r");
+        if (!pipe) {
+            cout << "popen failed" << endl;
+        } else {
+            fgets(buffer, 128, pipe);
+            assert(Utilities::equals("1\n", buffer));
+        }
+
+        pipe = popen("./boyos 1 + 2", "r");
+        if (!pipe) {
+            cout << "popen failed" << endl;
+        } else {
+            fgets(buffer, 128, pipe);
+            assert(Utilities::equals("3\n", buffer));
+        }
+
+        pipe = popen("./boyos 1 - 2", "r");
+        if (!pipe) {
+            cout << "popen failed" << endl;
+        } else {
+            fgets(buffer, 128, pipe);
+            assert(Utilities::equals("-1\n", buffer));
+        }
+    }
+    
+    void test() {
+        _divide_by_zero();
+        _invalid_operand();
+        _invalid_operator();
+        _missing_operand();
+        _missing_operator();
+        _arithmetic();
     }
 };
 

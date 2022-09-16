@@ -14,7 +14,7 @@ class engine {
         static int _parse(const char*);
         static void _validate(int);
 
-        static int execute(int argc, const char** argv);
+        static int execute(int, const char**);
 };
 
 #endif
