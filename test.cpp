@@ -71,6 +71,13 @@ namespace Unit {
                 assert(result == -2147483648);
 
                 try {
+                    result = engine._parse("01");
+                    assert(false);
+                } catch (invalid_operand& ex) {
+                    assert(Utilities::equals(ex.what(), "invalid operand"));
+                }
+
+                try {
                     result = engine._parse("z");
                     assert(false);
                 } catch (invalid_operand& ex) {
