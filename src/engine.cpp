@@ -9,6 +9,10 @@ int engine::_parse(const char* a) {
     if (a[0] == '+' || a[0] == '-') {
         i += 1;
     }
+    if (a[i] == '0' && a[i+1] != 0) {
+        throw invalid_operand();
+    }
+
     while (a[i] != 0) {
         if (a[i] < '0' || a[i] > '9') {
             throw invalid_operand();
