@@ -1,16 +1,20 @@
-# boyos
-Implementation of an interpreted language from "scratch" in c++. Will be build up in phases.
+# boyos #
+A command-line application that supports basic 2-operand calculations.
 
-## Phases:
-Implement links here...
-
-## Building:
+## Building: ##
 Run the following command:
 ```make```
 
-## Running:
+## Running: ##
 Run the following command after building:
-```./boyos```
+```./boyos 1 + 2```
 
-## To-Do ##
- - remove `<exception>` implementations
+Output:
+```3```
+
+## Testing: ##
+Run the following to build test application:
+```make test```
+
+Run the test application:
+```./test```
