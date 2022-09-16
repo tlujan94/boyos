@@ -3,6 +3,7 @@
 
 #include "src/engine.h"
 #include "src/errors/invalid_operand.h"
+#include "src/errors/invalid_operator.h"
 #include "src/errors/missing_operand.h"
 #include "src/errors/missing_operator.h"
 
@@ -25,6 +26,11 @@ namespace Unit {
     void _invalid_operand() {
         invalid_operand ex;
         assert(Utilities::equals(ex.what(), "invalid operand"));
+    }
+
+    void _invalid_operator() {
+        invalid_operator ex;
+        assert(Utilities::equals(ex.what(), "invalid operator"));
     }
 
     void _missing_operand() {
@@ -108,6 +114,7 @@ namespace Unit {
 
     void test() {
         _invalid_operand();
+        _invalid_operator();
         _missing_operand();
         _missing_operator();
 
