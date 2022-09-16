@@ -39,6 +39,40 @@ namespace Unit {
 
     class _engine {
         public:
+            static void _parse() {
+                engine engine;
+                int result;
+
+                result = engine._parse("1");
+                assert(result == 1);
+
+                result = engine._parse("0");
+                assert(result == 0);
+
+                result = engine._parse("-1");
+                assert(result == -1);
+
+                result = engine._parse("+2147483647");
+                assert(result == 2147483647);
+                
+                result = engine._parse("-2147483648");
+                assert(result == -2147483648);
+
+                try {
+                    result = engine._parse("z");
+                    assert(false);
+                } catch (invalid_operand& ex) {
+                    assert(Utilities::equals(ex.what(), "invalid operand"));
+                }
+
+                try {
+                    result = engine._parse("+2147483648");
+                    assert(false);
+                } catch (invalid_operand& ex) {
+                    assert(Utilities::equals(ex.what(), "invalid operand"));
+                }
+            }
+
             static void _validate() {
                 engine engine;
 
@@ -78,6 +112,7 @@ namespace Unit {
         _missing_operator();
 
         _engine e;
+        e._parse();
         e._validate();
     }
 }
