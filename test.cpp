@@ -325,12 +325,57 @@ namespace Integration {
         }
     }
 
+    void _arithmetic() {
+        char buffer[128];
+    
+        FILE* pipe = popen("./boyos 1 * 2", "r");
+        if (!pipe) {
+            cout << "popen failed" << endl;
+        } else {
+            fgets(buffer, 128, pipe);
+            assert(Utilities::equals("2\n", buffer));
+        }
+
+        pipe = popen("./boyos 1 / 2", "r");
+        if (!pipe) {
+            cout << "popen failed" << endl;
+        } else {
+            fgets(buffer, 128, pipe);
+            assert(Utilities::equals("0\n", buffer));
+        }
+
+        pipe = popen("./boyos 1 % 2", "r");
+        if (!pipe) {
+            cout << "popen failed" << endl;
+        } else {
+            fgets(buffer, 128, pipe);
+            assert(Utilities::equals("1\n", buffer));
+        }
+
+        pipe = popen("./boyos 1 + 2", "r");
+        if (!pipe) {
+            cout << "popen failed" << endl;
+        } else {
+            fgets(buffer, 128, pipe);
+            assert(Utilities::equals("3\n", buffer));
+        }
+
+        pipe = popen("./boyos 1 - 2", "r");
+        if (!pipe) {
+            cout << "popen failed" << endl;
+        } else {
+            fgets(buffer, 128, pipe);
+            assert(Utilities::equals("-1\n", buffer));
+        }
+    }
+    
     void test() {
         _divide_by_zero();
         _invalid_operand();
         _invalid_operator();
         _missing_operand();
         _missing_operator();
+        _arithmetic();
     }
 };
 
