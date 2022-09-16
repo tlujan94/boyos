@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdio.h>
 
+#include "src/engine.h"
 #include "src/errors/missing_operand.h"
 #include "src/errors/missing_operator.h"
 
@@ -30,9 +31,44 @@ namespace Unit {
         assert(Utilities::equals(ex.what(), "missing operator"));
     }
 
+    class _engine {
+        public:
+            static void _validate() {
+                engine engine;
+
+                try {
+                    engine._validate(1);
+                } catch (missing_operand& e) {
+                    assert(Utilities::equals(e.what(), "missing operand"));
+                }
+
+                try {
+                    engine._validate(2);
+                } catch (missing_operator& e) {
+                    assert(Utilities::equals(e.what(), "missing operator"));
+                }
+
+                try {
+                    engine._validate(3);
+                } catch (missing_operand& e) {
+                    assert(Utilities::equals(e.what(), "missing operand"));
+                }
+
+                try {
+                    engine._validate(4);
+                } catch (...) {
+                    assert(false);
+                }
+                
+            }
+    };
+
     void test() {
         _missing_operand();
         _missing_operator();
+
+        _engine e;
+        e._validate();
     }
 }
 
